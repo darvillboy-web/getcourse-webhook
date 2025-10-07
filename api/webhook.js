@@ -24,13 +24,66 @@ export default async function handler(req, res) {
     console.log('📨 Received:', type)
 
     let result
+
     if (type === 'registration') {
-      result = await supabase.from('users').insert(data)
-    } else if (type === 'lesson_action') {
-      result = await supabase.from('lesson_actions').insert(data)
-    } else if (type === 'survey_answer') {
-      result = await supabase.from('survey_answers').insert(data)
-    } else {
+      const formattedData = {
+        user_id: data.userId,
+        user_name: data.userName,
+        email: data.email,
+        account_id: data.accountId,
+        account_title: data.accountTitle,
+        ts64: data.ts64,
+        timestamp: data.timestamp,
+        invite_type: data.inviteType,
+        utm_source: data.utmSource,
+        utm_medium: data.utmMedium,
+        utm_campaign: data.utmCampaign,
+        utm_content: data.utmContent,
+        utm_term: data.utmTerm,
+        partner_code_id: data.partnerCodeId,
+        ad_offer_id: data.adOfferId
+      }
+      result = await supabase.from('users').insert(formattedData)
+    }
+
+    else if (type === 'lesson_action') {
+      const formattedData = {
+        user_id: data.userId,
+        user_name: data.userName,
+        full_user_id: data.fullUserId,
+        lesson_id: data.lessonId,
+        lesson_title: data.lessonTitle,
+        lesson_number: data.lessonNumber,
+        training_id: data.trainingId,
+        training_name: data.trainingName,
+        action_type: data.actionType,
+        answer_text: data.answerText,
+        question_title: data.questionTitle,
+        account_title: data.accountTitle,
+        ts64: data.ts64,
+        timestamp: data.timestamp
+      }
+      result = await supabase.from('lesson_actions').insert(formattedData)
+    }
+
+    else if (type === 'survey_answer') {
+      const formattedData = {
+        user_id: data.userId,
+        user_name: data.userName,
+        full_user_id: data.fullUserId,
+        survey_id: data.surveyId,
+        form_id: data.formId,
+        group_id: data.groupId,
+        responses: data.responses,
+        responses_raw: data.responsesRaw,
+        account_title: data.accountTitle,
+        ts64: data.ts64,
+        timestamp: data.timestamp
+      }
+      result = await supabase.from('survey_answers').insert(formattedData)
+    }
+
+    else {
       return res.status(400).json({ error: 'Unknown type' })
     }
 
