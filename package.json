@@ -1,6 +1,5 @@
-json
 {
-  "name": "getcourse-webhook",
+  "name": "getcourse-webhook", 
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
